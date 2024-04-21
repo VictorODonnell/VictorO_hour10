@@ -5,25 +5,23 @@ using UnityEngine;
 public class GoalScript : MonoBehaviour
 {
     public bool isSolved = false;
-    void OnTriggerEnter (Collider collider)
+
+    void OnTriggerEnter(Collider collider)
     {
         GameObject collidedWith = collider.gameObject;
         if (collidedWith.tag == gameObject.tag)
         {
             isSolved = true;
-            GetComponent<Light>().enabled = false;
-            Destroy (collidedWith);
+            Light lightComponent = GetComponent<Light>();
+            if (lightComponent != null)
+            {
+                lightComponent.enabled = false;
+            }
+            else
+            {
+                Debug.LogWarning("No Light component found on the game object: " + gameObject.name);
+            }
+            Destroy(collidedWith);
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
